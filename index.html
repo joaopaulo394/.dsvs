@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprender & Comunicar - CAA e Alfabetização</title>
+  
+  <!-- Fontes do Google para Alta Legibilidade e Dislexia -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-mode="normal" data-dyslexia="false" data-tint="none">
+
+  <!-- SVG Filters para Daltonismo -->
+  <svg style="display: none;">
+    <defs>
+      <filter id="protanopia-filter">
+        <feColorMatrix type="matrix" values="0.56667 0.43333 0 0 0  0.55833 0.44167 0 0 0  0 0.24167 0.75833 0 0  0 0 0 1 0" />
+      </filter>
+      <filter id="deuteranopia-filter">
+        <feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0" />
+      </filter>
+      <filter id="tritanopia-filter">
+        <feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.43333 0.56667 0 0  0 0.475 0.525 0 0  0 0 0 1 0" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Overlay para Síndrome de Irlen / Sensibilidade Visual -->
+  <div id="irlenOverlay" class="irlen-overlay"></div>
+
+  <!-- Régua de Leitura para Dislexia -->
+  <div id="readingRuler" class="reading-ruler"></div>
+
+  <header class="app-header">
+    <div class="header-main">
+      <h1>🌟 Aprender &amp; Comunicar</h1>
+      <p class="subtitle">Plataforma Interativa de Comunicação Alternativa (CAA) e Alfabetização</p>
+    </div>
+
+    <!-- Painel de Acessibilidade -->
+    <div class="accessibility-panel">
+      <!-- Filtro para Daltonismo -->
+      <div class="control-group">
+        <label for="colorBlindSelect">👁️ Visão / Daltonismo:</label>
+        <select id="colorBlindSelect">
+          <option value="normal">Padrão Suave (TEA)</option>
+          <option value="protanopia">Protanopia (Sem Vermelho)</option>
+          <option value="deuteranopia">Deuteranopia (Sem Verde)</option>
+          <option value="tritanopia">Tritanopia (Sem Azul)</option>
+          <option value="high-contrast">Alto Contraste</option>
+        </select>
+      </div>
+
+      <!-- Suporte à Dislexia -->
+      <div class="control-group">
+        <button id="toggleDyslexiaBtn" class="btn-toggle">📖 Fonte para Dislexia: OFF</button>
+      </div>
+
+      <!-- Tintas de Fundo (Irlen/Dislexia Visual) -->
+      <div class="control-group">
+        <label for="tintSelect">🎨 Cor de Fundo de Leitura:</label>
+        <select id="tintSelect">
+          <option value="none">Original Suave</option>
+          <option value="cream">Creme / Amarelado</option>
+          <option value="blue">Azul Céu Suave</option>
+          <option value="green">Verde Menta</option>
+          <option value="rose">Rosa Suave</option>
+        </select>
+      </div>
+
+      <!-- Régua de Leitura -->
+      <div class="control-group">
+        <button id="toggleRulerBtn" class="btn-toggle">📏 Guia de Leitura: OFF</button>
+      </div>
+
+      <!-- Velocidade do Áudio -->
+      <div class="control-group">
+        <label for="speechRate">🔊 Velocidade da Voz:</label>
+        <select id="speechRate">
+          <option value="1">Normal</option>
+          <option value="0.85" selected>Calma e Pausada</option>
+          <option value="0.65">Muito Lenta</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navegação Principal -->
+  <nav class="category-nav">
+    <button class="nav-btn active" data-tab="alphabet">🔤 Alfabeto &amp; Sílabas</button>
+    <button class="nav-btn" data-tab="numbers">🔢 Números (1-10)</button>
+    <button class="nav-btn" data-tab="shapes">📐 Formas Geométricas</button>
+    <button class="nav-btn" data-tab="colors">🎨 Cores &amp; Padrões</button>
+    <button class="nav-btn" data-tab="objects">📦 Objetos do Dia a Dia</button>
+    <button class="nav-btn" data-tab="aac">🗣️ Prancha de Comunicação (PECS)</button>
+    <button class="nav-btn" data-tab="game">⭐ Jogo Educativo</button>
+  </nav>
+
+  <!-- Conteúdo Dinâmico -->
+  <main class="main-content">
+    
+    <!-- ABA: ALFABETO -->
+    <section id="alphabet" class="tab-content active">
+      <div class="section-intro">
+        <h2>Alfabeto e Formação Silábica</h2>
+        <p>Clique nas letras para ouvir a letra, o som, a palavra e veja as sílabas destacadas.</p>
+      </div>
+      <div class="grid-container" id="alphabetGrid"></div>
+    </section>
+
+    <!-- ABA: NÚMEROS -->
+    <section id="numbers" class="tab-content">
+      <div class="section-intro">
+        <h2>Números e Quantidades</h2>
+        <p>Aprenda a contar com figuras interativas e apoio visual de quantidade.</p>
+      </div>
+      <div class="grid-container" id="numbersGrid"></div>
+    </section>
+
+    <!-- ABA: FORMAS -->
+    <section id="shapes" class="tab-content">
+      <div class="section-intro">
+        <h2>Formas Geométricas</h2>
+        <p>Identifique as formas no mundo ao seu redor.</p>
+      </div>
+      <div class="grid-container" id="shapesGrid"></div>
+    </section>
+
+    <!-- ABA: CORES -->
+    <section id="colors" class="tab-content">
+      <div class="section-intro">
+        <h2>Cores com Símbolos e Texturas</h2>
+        <p>Cada cor tem um padrão geométrico associado para facilitar a identificação (ideal para daltonismo).</p>
+      </div>
+      <div class="grid-container" id="colorsGrid"></div>
+    </section>
+
+    <!-- ABA: OBJETOS -->
+    <section id="objects" class="tab-content">
+      <div class="section-intro">
+        <h2>Objetos do Cotidiano</h2>
+        <p>Coisas que usamos todos os dias em casa e na escola.</p>
+      </div>
+      <div class="grid-container" id="objectsGrid"></div>
+    </section>
+
+    <!-- ABA: PRANCHA DE COMUNICAÇÃO (AAC) -->
+    <section id="aac" class="tab-content">
+      <div class="section-intro">
+        <h2>Prancha de Comunicação Expressiva (PECS / CAA)</h2>
+        <p>Selecione os cartões para montar uma frase e o aplicativo vai falar por você!</p>
+      </div>
+
+      <!-- Barra de Construção da Frase -->
+      <div class="sentence-builder">
+        <div class="sentence-display" id="sentenceDisplay">
+          <span class="placeholder-text">Sua frase aparecerá aqui...</span>
+        </div>
+        <div class="sentence-actions">
+          <button id="speakSentenceBtn" class="action-btn btn-speak">🔊 Falar Frase</button>
+          <button id="clearSentenceBtn" class="action-btn btn-clear">🗑️ Apagar</button>
+        </div>
+      </div>
+
+      <div class="aac-categories" id="aacCategories">
+        <button class="filter-btn active" data-aac-cat="all">Todas</button>
+        <button class="filter-btn" data-aac-cat="needs">Necessidades</button>
+        <button class="filter-btn" data-aac-cat="feelings">Sentimentos</button>
+        <button class="filter-btn" data-aac-cat="actions">Ações</button>
+        <button class="filter-btn" data-aac-cat="places">Lugares</button>
+      </div>
+
+      <div class="grid-container" id="aacGrid"></div>
+    </section>
+
+    <!-- ABA: JOGO EDUCATIVO -->
+    <section id="game" class="tab-content">
+      <div class="game-container">
+        <div class="game-header">
+          <h2>⭐ Jogo das Descobertas</h2>
+          <p>Encontre a figura certa! Sem cronômetro e sem mensagens de erro estressantes.</p>
+        </div>
+
+        <div class="game-card" id="gameQuestionCard">
+          <p class="game-prompt" id="gamePrompt">Clique no botão abaixo para começar!</p>
+          <button id="startGameBtn" class="action-btn btn-speak">🎮 Começar Jogo</button>
+        </div>
+
+        <div class="game-options-grid" id="gameOptionsGrid"></div>
+
+        <div id="gameFeedback" class="game-feedback"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Desenvolvido com foco em acessibilidade universal (TEA, CAA/PECS, Dislexia, Daltonismo e Baixa Visão).</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
